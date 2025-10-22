@@ -40,7 +40,7 @@ class PlaybackController(
             stopPlayback()
         }
         
-        return flow {
+        return channelFlow {
             try {
                 _state.value = MacroState.PLAYING
                 
@@ -132,7 +132,7 @@ class PlaybackController(
                             executionLog = executionLog
                         )
                         
-                        emit(result)
+                        send(result)
                         
                     } catch (e: Exception) {
                         val executionTime = System.currentTimeMillis() - startTime
@@ -145,7 +145,7 @@ class PlaybackController(
                             executionLog = executionLog
                         )
                         
-                        emit(result)
+                        send(result)
                     }
                 }
                 
@@ -168,7 +168,7 @@ class PlaybackController(
                 
             } catch (e: Exception) {
                 _state.value = MacroState.ERROR
-                emit(MacroExecutionResult(
+                send(MacroExecutionResult(
                     success = false,
                     iterationsCompleted = 0,
                     eventsExecuted = 0,

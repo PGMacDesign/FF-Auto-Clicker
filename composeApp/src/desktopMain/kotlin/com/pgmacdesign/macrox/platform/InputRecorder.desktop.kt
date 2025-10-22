@@ -1,29 +1,32 @@
 package com.pgmacdesign.macrox.platform
 
 import com.pgmacdesign.macrox.model.Event
+import com.pgmacdesign.macrox.platform.macos.MacOSInputRecorder
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.emptyFlow
 
 /**
- * Desktop implementation of InputRecorder - stub implementation for now
+ * Desktop implementation of InputRecorder using macOS-specific implementation
+ * Works on macOS/Linux, can be replaced with Windows implementation when on Windows
  */
 actual class InputRecorder {
+    private val impl = MacOSInputRecorder()
+    
     actual suspend fun startRecording(): Flow<Event> {
-        // TODO: Implement actual recording
-        return emptyFlow()
+        return impl.startRecording()
     }
     
     actual suspend fun stopRecording() {
-        // TODO: Implement actual stop recording
+        impl.stopRecording()
     }
     
-    actual val isRecording: Boolean = false
+    actual val isRecording: Boolean
+        get() = impl.isRecording
     
     actual suspend fun registerStopHotkey(keyCode: Int, callback: () -> Unit) {
-        // TODO: Implement hotkey registration
+        impl.registerStopHotkey(keyCode, callback)
     }
     
     actual suspend fun unregisterStopHotkey() {
-        // TODO: Implement hotkey unregistration
+        impl.unregisterStopHotkey()
     }
 }
